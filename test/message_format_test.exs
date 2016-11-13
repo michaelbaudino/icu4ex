@@ -28,12 +28,12 @@ defmodule ICUTest.MessageFormat do
   end
 
   test "format date when argument is `date`" do
-    {:ok, birthday} = Calendar.DateTime.new(1984, 04, 26)
+    {:ok, birthday} = Calendar.DateTime.Parse.rfc2822_utc("Thu, 26 Apr 1984 12:15:00 +0200")
     assert format("I was born on {birthday, date}", %{birthday: birthday}) == "I was born on Apr. 26, 1984"
   end
 
   test "format date in given `format` when argument is `date`" do
-    {:ok, birthday} = Calendar.DateTime.new(1984, 04, 26)
+    {:ok, birthday} = Calendar.DateTime.Parse.rfc2822_utc("Thu, 26 Apr 1984 12:15:00 +0200")
     assert format("I was born on {birthday, date, short}", %{birthday: birthday}) == "I was born on 1984-04-26"
   end
 end

@@ -2,6 +2,7 @@ defmodule ICU.DateFormat do
   alias ICU.LocaleNotFound
   alias ICU.FormatNotFound
 
+  # Should be in a separate file and include more locales
   @all_format_strings %{
     en: %{
       "short"  => "%Y-%m-%d",

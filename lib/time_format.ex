@@ -2,24 +2,25 @@ defmodule ICU.TimeFormat do
   alias ICU.LocaleNotFound
   alias ICU.FormatNotFound
 
-  # Shamelessly copied from https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/en.yml
+  # Shamelessly copied and slightly modified from https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/en.yml
+  # Should be in a separate file and include more locales
   @all_format_strings %{
     en: %{
-      "short"  => "%I:%M%P",
+      "short"  => "%l:%M%P",
       "medium" => "%H:%M",
       "long"   => "%H:%M:%S",
       "full"   => "%H:%M:%S"
     },
     fr: %{
       "short"  => "%Hh%M",
-      "medium" => "%Hh%M %Ss",
+      "medium" => "%Hh %Mm %Ss",
       "long"   => "%Hh %Mmin %Ss",
       "full"   => "%Hh %Mmin %Ss"
     }
   }
 
   def format(time, locale, format_name \\ "medium") do
-    time |> Calendar.Strftime.strftime!(format_string(locale, format_name), locale)
+    time |> Calendar.Strftime.strftime!(format_string(locale, format_name), locale) |> String.trim
   end
 
   defp format_string(locale, format_name) do
