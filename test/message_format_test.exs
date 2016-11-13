@@ -5,6 +5,11 @@ defmodule ICUTest.MessageFormat do
   import ICU.MessageFormat
   alias ICU.MessageFormat.MissingValueError
 
+  setup do
+    {:ok, birthday} = Calendar.DateTime.Parse.rfc2822_utc("Thu, 26 Apr 1984 12:15:00 +0200")
+    {:ok, birthday: birthday}
+  end
+
   test "return the string when there is no variable" do
     assert format("Good morning") == "Good morning"
   end
@@ -27,13 +32,19 @@ defmodule ICUTest.MessageFormat do
     assert format("I'm sure {certainty, number, percent}!", %{certainty: 100}) == "I'm sure 100%!"
   end
 
-  test "format date when argument is `date`" do
-    {:ok, birthday} = Calendar.DateTime.Parse.rfc2822_utc("Thu, 26 Apr 1984 12:15:00 +0200")
+  test "format date when argument is `date`", %{birthday: birthday} do
     assert format("I was born on {birthday, date}", %{birthday: birthday}) == "I was born on Apr. 26, 1984"
   end
 
-  test "format date in given `format` when argument is `date`" do
-    {:ok, birthday} = Calendar.DateTime.Parse.rfc2822_utc("Thu, 26 Apr 1984 12:15:00 +0200")
+  test "format date in given `format` when argument is `date`", %{birthday: birthday} do
     assert format("I was born on {birthday, date, short}", %{birthday: birthday}) == "I was born on 1984-04-26"
+  end
+
+  test "format time when argument is `time`", %{birthday: birthday} do
+    assert format("I was born at {birthday, time}", %{birthday: birthday}) == "I was born at 10:15"
+  end
+
+  test "format time in given `format` when argument is `time`", %{birthday: birthday} do
+    assert format("I was born at {birthday, time, short}", %{birthday: birthday}) == "I was born at 10:15am"
   end
 end

@@ -39,6 +39,14 @@ defmodule ICU.MessageFormat do
     values |> find_indifferent(key) |> DateFormat.format(:en, format)
   end
 
+  defp interpolate_argument([key, "time"], values) do
+    interpolate_argument([key, "time", "medium"], values)
+  end
+
+  defp interpolate_argument([key, "time", format], values) do
+    values |> find_indifferent(key) |> TimeFormat.format(:en, format)
+  end
+
   defp find_indifferent(values, key) do
     values[key] || values[String.to_atom(key)] || raise MissingValueError, key
   end
