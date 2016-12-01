@@ -81,7 +81,7 @@ defmodule ICUTest.MessageFormat do
   end
 
   test "when an `other` option is provided, it is used when no other option matches" do
-    message = "Call me {gender, select, male {Sir} female {Madam} other {something else}}."
+    message = "Call me {gender, select, male {Sir} female {Madam} other {someone else}}."
     assert format(message, %{gender: :transgender}) == "Call me someone else."
   end
 
